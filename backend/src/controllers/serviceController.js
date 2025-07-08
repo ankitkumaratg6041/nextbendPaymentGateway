@@ -1,7 +1,7 @@
 export const getAllServices = (req, res) => {
     const data = [
       {
-        category: 'Web',
+        category: 'Web Dev',
         services: ['Websites', 'E-commerce', 'Web Apps', 'Hosting', 'SEO'],
         addons: ['Domain setup', 'Extra SEO Package']
       },
