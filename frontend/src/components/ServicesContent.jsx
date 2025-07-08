@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addSelectedServices } from '../redux/orderSlice';
+import LiveSelectionPreview from './LiveSelectionPreview';
 
 // const dummyServices = [{
 //   category: 'Web',
@@ -44,6 +45,7 @@ export default function ServicesContent() {
 
   const isLoggedIn = false; // later replace with real auth check
 
+  // we will later make this useEffect a custom hook
   useEffect(() => {
     const fetchServices = async () => {
       try {
@@ -59,6 +61,7 @@ export default function ServicesContent() {
     fetchServices();
   }, []);
 
+  // we will later make this handleSelectPlans a custom hook as well
   const handleSelectPlans = () => {
     // dispatch to Redux here
     const cleanedSelections = Object.entries(selections)
@@ -88,20 +91,20 @@ export default function ServicesContent() {
               isCollapsed ? 'ml-20' : 'ml-64'
             }`}
           >
-            <h1 className="text-4xl font-bold mb-8 text-indigo-50">Our Services</h1>
+              <h1 className="text-4xl font-bold mb-8 text-indigo-50">Our Services</h1>
 
-            <div className="flex flex-wrap justify-left gap-6">
-              <CategoryCard data={serviceData} />
-            </div>
-          <button onClick={handleSelectPlans} className='p-5 mt-5 text-3xl bg-blue-600 border-2 rounded-lg cursor-pointer'>
-            Select Plans
-          </button>
-      </div>
+              <div className="flex flex-wrap justify-left gap-6">
+                <CategoryCard data={serviceData} />
+              </div>
+            <button onClick={handleSelectPlans} className='p-5 mt-5 text-3xl bg-blue-600 border-2 rounded-lg cursor-pointer'>
+              Select Plans
+            </button>
+          </div>
       
-      {/* Right side showing order details for the user */}
-      <div>
-
-      </div>
+          {/* Live preview section */}
+          <div className="fixed right-4 top-24 z-10">
+            <LiveSelectionPreview />
+          </div>
         
       </div>
   );
