@@ -12,7 +12,7 @@ export default function ServiceList({ title, services, serviceType, onItemClick 
                   
               <button
                 onClick={() => onItemClick(service, serviceType)}
-                className="text-lg font-bold hover:text-green-300"
+                className="text-lg font-bold hover:text-green-300 cursor-pointer"
               >
                 +
               </button>

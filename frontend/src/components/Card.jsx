@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import web from "../images/web.jpg";
 import ServiceList from "./ServiceList";
+import { useServicesSelection } from '../hooks/useServicesSelection';
 
 /**
  * 
@@ -17,19 +18,21 @@ export default function Card({ category, services, addons }) {
         category: category,
         services: [],
         addons: []
-      });
-      
-      const TYPES = {
+    });
+    
+    const TYPES = {
         SERVICES: 'services',
         ADDONS: 'addons'
-      };
+    };
+
+    const { updateCategorySelection } = useServicesSelection(); // Now, whenever the user selects or deselects in a card, the whole category data is pushed into the context.
     
     const handleSelection = (service, serviceType) => {
-          console.log(`Service in handleSelection: ${serviceType}`)
+        //   console.log(`Service in handleSelection: ${serviceType}`)
         setLocalSelection(prev => {
-            console.log(`Prev category: ${prev.category}`)
-            console.log(`Prev Services: ${prev.services}`)
-            console.log(`Prev addons: ${prev.addons}`)
+            // console.log(`Prev category: ${prev.category}`)
+            // console.log(`Prev Services: ${prev.services}`)
+            // console.log(`Prev addons: ${prev.addons}`)
           const updatedList = prev[serviceType].includes(service)
             ? prev[serviceType].filter(i => i !== service)
             : [...prev[serviceType], service];
@@ -39,12 +42,14 @@ export default function Card({ category, services, addons }) {
             [serviceType]: updatedList
           };
         });
-      };      
+    };      
+    
 
       useEffect(() => {
-        console.log("Current selection for:", category);
-        console.log(localSelection);
-      }, [localSelection, category]);
+        // console.log("Current selection for:", category);
+        // console.log(localSelection);
+        updateCategorySelection(localSelection);
+      }, [localSelection]);
     
   return (
     <div className="grid grid-cols-12 border border-black rounded-lg overflow-hidden w-[45em] shadow-md">
