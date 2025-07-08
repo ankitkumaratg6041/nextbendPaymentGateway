@@ -14,42 +14,40 @@ import { useServicesSelection } from '../hooks/useServicesSelection';
  */
 
 export default function Card({ category, services, addons }) {
-    const [localSelection, setLocalSelection] = useState({
-        category: category,
-        services: [],
-        addons: []
-    });
-    
-    const TYPES = {
-        SERVICES: 'services',
-        ADDONS: 'addons'
-    };
+  const [localSelection, setLocalSelection] = useState({
+    services: [],
+    addons: []
+  });
 
-    const { updateCategorySelection } = useServicesSelection(); // Now, whenever the user selects or deselects in a card, the whole category data is pushed into the context.
-    
-    const handleSelection = (service, serviceType) => {
-        //   console.log(`Service in handleSelection: ${serviceType}`)
-        setLocalSelection(prev => {
-            // console.log(`Prev category: ${prev.category}`)
-            // console.log(`Prev Services: ${prev.services}`)
-            // console.log(`Prev addons: ${prev.addons}`)
-          const updatedList = prev[serviceType].includes(service)
-            ? prev[serviceType].filter(i => i !== service)
-            : [...prev[serviceType], service];
+  const { updateCategorySelection } = useServicesSelection();
+
+  const TYPES = {
+    SERVICES: 'services',
+    ADDONS: 'addons'
+  };
+
+  const handleSelection = (category, serviceType, service) => {
+    setLocalSelection(prev => {
+      const currentList = prev[serviceType] || [];
+      const isSelected = currentList.includes(service);
+
+      // here if same service is clicked twice it will be removed else added
+      const updatedList = isSelected
+        ? currentList.filter(i => i !== service)
+        : [...currentList, service];
+        
+        return {
+          ...prev,
+          [serviceType]: updatedList
+        };
+      });
+  };
       
-          return {
-            ...prev,
-            [serviceType]: updatedList
-          };
-        });
-    };      
     
 
-      useEffect(() => {
-        // console.log("Current selection for:", category);
-        // console.log(localSelection);
-        updateCategorySelection(localSelection);
-      }, [localSelection]);
+  useEffect(() => {
+    updateCategorySelection(category, localSelection.services, localSelection.addons);
+  }, [localSelection]);
     
   return (
     <div className="grid grid-cols-12 border border-black rounded-lg overflow-hidden w-[45em] shadow-md">

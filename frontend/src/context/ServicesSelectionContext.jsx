@@ -6,25 +6,22 @@ import { ServicesSelectionContext } from './ServicesSelectionContextObject';
 
 // Create provider
 export const ServicesSelectionProvider = ({ children }) => {
-    const [selections, setSelections] = useState([]);
+    const [selections, setSelections] = useState({});
   
-    const updateCategorySelection = (newSelection) => {
+    const updateCategorySelection = (category, services, addons) => {
         setSelections(prev => {
-            const existingIndex = prev.findIndex(
-                item => item.category === newSelection.category
-            );
-  
-            if (existingIndex !== -1) {
-                const updated = [...prev];
-                updated[existingIndex] = newSelection;
-                return updated;
-            } else {
-                return [...prev, newSelection];
-            }
+          const updated = { ...prev };
+      
+          if (services?.length === 0 && addons?.length === 0) {
+            delete updated[category];
+          } else {
+            updated[category] = { services, addons };
+          }
+          return updated;
         });
-    };
-    
-    const resetSelections = () => setSelections([]);
+      };
+      
+    const resetSelections = () => setSelections({});
 
     return (
         <ServicesSelectionContext.Provider

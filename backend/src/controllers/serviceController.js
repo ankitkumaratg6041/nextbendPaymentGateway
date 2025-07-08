@@ -27,6 +27,7 @@ export const getAllServices = (req, res) => {
       }
     ];
   
+  
     res.json({ success: true, data });
   };
   

@@ -60,11 +60,14 @@ export default function ServicesContent() {
   }, []);
 
   const handleSelectPlans = () => {
-    console.log("Final Selections:", selections);
     // dispatch to Redux here
-    const cleanedSelections = selections.filter(
-      (item) => item.services.length > 0 || item.addons.length > 0
-    );
+    const cleanedSelections = Object.entries(selections)
+    .filter(([_, val]) => Array.isArray(val.services) || Array.isArray(val.addons))
+    .map(([category, val]) => ({
+      category,
+      services: val.services || [],
+      addons: val.addons || []
+    }));
 
     dispatch(addSelectedServices(cleanedSelections));
   };
@@ -87,13 +90,18 @@ export default function ServicesContent() {
           >
             <h1 className="text-4xl font-bold mb-8 text-indigo-50">Our Services</h1>
 
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="flex flex-wrap justify-left gap-6">
               <CategoryCard data={serviceData} />
             </div>
-          <button onClick={handleSelectPlans} className='p-5 text-3xl bg-blue-600 border-2 rounded-lg cursor-pointer'>
+          <button onClick={handleSelectPlans} className='p-5 mt-5 text-3xl bg-blue-600 border-2 rounded-lg cursor-pointer'>
             Select Plans
           </button>
-        </div>
+      </div>
+      
+      {/* Right side showing order details for the user */}
+      <div>
+
+      </div>
         
       </div>
   );

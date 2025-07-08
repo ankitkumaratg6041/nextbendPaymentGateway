@@ -1,4 +1,4 @@
-export default function ServiceList({ title, services, serviceType, onItemClick }) {
+export default function ServiceList({ title, services, category, serviceType, onItemClick }) {
     return (
       <div>
         <p className="font-semibold mb-2">{title}:</p>
@@ -11,7 +11,7 @@ export default function ServiceList({ title, services, serviceType, onItemClick 
                 <p>{service}</p>
                   
               <button
-                onClick={() => onItemClick(service, serviceType)}
+                onClick={() => onItemClick(category, serviceType, service)}
                 className="text-lg font-bold hover:text-green-300 cursor-pointer"
               >
                 +
