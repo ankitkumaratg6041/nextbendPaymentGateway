@@ -44,7 +44,7 @@ export default function LiveSelectionPreview() {
                 <span>• {item}</span>
                 <button
                   onClick={() => handleRemoveItem(category, 'services', item)}
-                  className="text-red-400 hover:text-red-600 text-xl ml-2 cursor-pointer"
+                  className="text-red-400 font-bold hover:text-red-600 text-xl ml-2 cursor-pointer"
                   title="Remove"
                 >
                   ×
@@ -61,7 +61,7 @@ export default function LiveSelectionPreview() {
                 <span>+ {item}</span>
                 <button
                   onClick={() => handleRemoveItem(category, 'addons', item)}
-                  className="text-red-400 hover:text-red-600 text-xl ml-2 cursor-pointer"
+                  className="text-red-400 font-bold hover:text-red-600 text-xl ml-2 cursor-pointer"
                   title="Remove"
                 >
                   ×

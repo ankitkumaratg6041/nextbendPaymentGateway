@@ -1,7 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import servicesRouter from './routes/servicesRoute.js';
 import cors from 'cors'
+import servicesRouter from './routes/servicesRoute.js';
+import signupRouter from './routes/authRoutes.js';
+import cookieParser from 'cookie-parser'; // to easily set and read cookies
 
 // for loading environment variables
 dotenv.config();
@@ -16,8 +18,12 @@ app.use(cors({
     credentials: true               // optional, only if using cookies
   }));
 
+app.use(cookieParser());
 app.use(express.json());
+
+// Routes
 app.use('/services', servicesRouter)
+app.use('/auth', signupRouter);
 
 app.get('/', (req, res) => {
     res.send('Welcome to Nextbend Payment Gateway')
