@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import web from "../images/web.jpg";
+import web from "../../images/web.jpg";
 import ServiceList from "./ServiceList";
-import { useServicesSelection } from '../hooks/useServicesSelection';
+import { useServicesSelection } from '../../hooks/useServicesSelection';
 
 /**
  * 

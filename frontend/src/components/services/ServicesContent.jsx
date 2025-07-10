@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
-import Sidebar from './Sidebar';
+import { useState } from 'react';
+import Sidebar from '../Sidebar';
 import CategoryCard from './CategoryCard';
-import { useServicesSelection } from '../hooks/useServicesSelection';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { addSelectedServices } from '../redux/orderSlice';
+import { useServicesSelection } from '../../hooks/useServicesSelection';
 import LiveSelectionPreview from './LiveSelectionPreview';
+import useFetchServices from '@/hooks/useFetchServices';
+import useHandleLogout from '@/hooks/useHandleLogout';
+import useHandleSelectPlans from '@/hooks/useHandleSelectPlans';
 
 // const dummyServices = [{
 //   category: 'Web',
@@ -35,45 +34,12 @@ import LiveSelectionPreview from './LiveSelectionPreview';
 // }];
 
 export default function ServicesContent() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const { selections } = useServicesSelection();
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const [serviceData, setServiceData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const isLoggedIn = false; // later replace with real auth check
-
-  // we will later make this useEffect a custom hook
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const res = await axios.get('http://localhost:5000/services');
-        setServiceData(res.data.data);
-        setLoading(false);
-      } catch (err) {
-        console.error('Failed to fetch services:', err);
-        setLoading(false);
-      }
-    };
-
-    fetchServices();
-  }, []);
-
-  // we will later make this handleSelectPlans a custom hook as well
-  const handleSelectPlans = () => {
-    // dispatch to Redux here
-    const cleanedSelections = Object.entries(selections)
-    .filter(([_, val]) => Array.isArray(val.services) || Array.isArray(val.addons))
-    .map(([category, val]) => ({
-      category,
-      services: val.services || [],
-      addons: val.addons || []
-    }));
-
-    dispatch(addSelectedServices(cleanedSelections));
-  };
+  const { serviceData, loading } = useFetchServices();
+  const handleLogout = useHandleLogout();
+  const handleSelectPlans = useHandleSelectPlans(selections);
 
   if (loading) return <div className="text-white p-8">Loading services...</div>;
 
@@ -83,6 +49,7 @@ export default function ServicesContent() {
           <Sidebar
             isCollapsed={isCollapsed}
             toggleCollapse={() => setIsCollapsed(!isCollapsed)}
+            handleLogout={handleLogout}
           />
 
           {/* Main content area shifts based on sidebar width */}

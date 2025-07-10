@@ -1,4 +1,4 @@
-import { useServicesSelection } from '../hooks/useServicesSelection';
+import { useServicesSelection } from '../../hooks/useServicesSelection';
 
 export default function LiveSelectionPreview() {
     const { selections, updateCategorySelection } = useServicesSelection();

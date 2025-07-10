@@ -1,11 +1,7 @@
-import { useState } from "react";
 import { FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-export default function Sidebar({ isCollapsed, toggleCollapse }) {
-  const [isLoggedIn, setLoggedIn] = useState(false);
-
-  const toggleLogin = () => setLoggedIn(!isLoggedIn);
+export default function Sidebar({ isCollapsed, toggleCollapse, handleLogout }) {
 
   return (
     <div
@@ -19,32 +15,18 @@ export default function Sidebar({ isCollapsed, toggleCollapse }) {
           <h2 className="text-2xl font-bold text-indigo-600">Nextbend</h2>
         )}
         <button onClick={toggleCollapse}>
-          <FaBars className="text-xl text-indigo-800" />
+          <FaBars className="cursor-pointer text-xl text-indigo-800" />
         </button>
       </div>
 
       {/* Nav Links */}
       <nav className="flex flex-col space-y-4">
-        {!isLoggedIn ? (
-          <Link to="/login" className="text-indigo-700 hover:bg-amber-300 px-5">
-            {isCollapsed ? '🔐' : 'Login'}
-          </Link>
-        ) : (
-          <>
-            <button
-              onClick={toggleLogin}
-              className="text-red-600 hover:bg-amber-300 px-5 text-left"
-            >
-              {isCollapsed ? '🚪' : 'Logout'}
-            </button>
-            <Link
-              to="/plans"
-              className="text-indigo-700 hover:bg-amber-300 px-5"
-            >
-              {isCollapsed ? '📄' : 'View Plans'}
-            </Link>
-          </>
-        )}
+        <button
+          onClick={handleLogout}
+          className="text-red-600 hover:bg-amber-300 px-5 text-left cursor-pointer"
+        >
+          {isCollapsed ? '🚪' : 'Logout'}
+        </button>
       </nav>
     </div>
   );
