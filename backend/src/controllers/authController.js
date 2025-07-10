@@ -1,6 +1,7 @@
 import { PrismaClient } from '../../generated/prisma/index.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { sendApprovalEmail } from '../utils/mailer.js';
 
 
 const prisma = new PrismaClient();
@@ -17,7 +18,7 @@ export const signup = async (req, res) => {
             companyName,
             customMessage,
             password
-          } = req.body;   
+        } = req.body;   
         
         // ✅ Step 1: Check if user already exists
         const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -44,6 +45,8 @@ export const signup = async (req, res) => {
               approved: false, // default
             },
         });
+
+        await sendApprovalEmail(newUser);
         
         return res.status(201).json({
             message: 'Signup submitted. Awaiting admin approval.',
