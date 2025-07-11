@@ -4,7 +4,8 @@ import NotFound from './components/NotFound';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
-import SignupPage from './pages/Signup';
+import Plans from './pages/Plans';
+import Profile from './pages/Profile';
 
 function App() {
   const router = createBrowserRouter([
@@ -28,6 +29,14 @@ function App() {
     {
       path: '/signup',
       element: <Signup />
+    },
+    {
+      path: '/plans',
+      element: <Plans />
+    },
+    {
+      path: '/profile',
+      element: <Profile />
     },
     {
       path: "*",

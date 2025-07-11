@@ -1,8 +1,10 @@
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { addSelectedServices } from '../redux/orderSlice';
 
 export default function useHandleSelectPlans(selections) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSelectPlans = () => {
     const cleanedSelections = Object.entries(selections)
@@ -14,6 +16,7 @@ export default function useHandleSelectPlans(selections) {
       }));
 
     dispatch(addSelectedServices(cleanedSelections));
+    navigate('/plans');
   };
 
   return handleSelectPlans;

@@ -1,29 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    selectedServices: [],
-    selectedPlan: {}
-  };
+  selectedServices: [],     // From context or selection step
+  finalOrder: null          // Final merged data when user clicks "Submit"
+};
 
 const orderSlice = createSlice({
-    name: "orderDetials",
-    initialState,
-    reducers: {
-        addSelectedServices: (state, action) => {
-          // filter empty entries before setting this
-          state.selectedServices = action.payload;
-        },
-      
-        addSelectedPlan: (state, action) => {
-          state.selectedPlan = {
-            ...action.payload,
-            timestamp: Date.now()
-          };
-        },
-      
-        resetOrderDetails: () => initialState
-      }
-})
+  name: "orderDetails",
+  initialState,
+  reducers: {
+    addSelectedServices: (state, action) => {
+      state.selectedServices = action.payload;
+    },
 
-export const { addSelectedServices, addSelectedPlan, resetOrderDetails } = orderSlice.actions;
+    setFinalOrderDetails: (state, action) => {
+      state.finalOrder = {
+        ...action.payload,
+        submittedAt: Date.now()
+      };
+    },
+
+    resetOrderDetails: () => initialState
+  }
+});
+
+export const {
+  addSelectedServices,
+  setFinalOrderDetails,
+  resetOrderDetails
+} = orderSlice.actions;
+
 export default orderSlice.reducer;

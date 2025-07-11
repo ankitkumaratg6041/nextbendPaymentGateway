@@ -28,4 +28,20 @@ model User {
   approved      Boolean  @default(false)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+
+  // 🆕 Relationship
+  orders        OrderRequest[]
 }
+
+model OrderRequest {
+  id          String   @id @default(cuid())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  status      String   @default("pending")
+  services    Json
+  plans       Json
+  quotePdfUrl String? // uploaded by admin
+  dealAccepted Boolean @default(false) // user can accept deal
+  submittedAt DateTime @default(now())
+}
+
