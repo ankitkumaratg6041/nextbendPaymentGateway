@@ -6,6 +6,10 @@ import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import Plans from './pages/Plans';
 import Profile from './pages/Profile';
+import Questionnaire from './pages/Questionnaire';
+import UserProfile from './pages/UserProfile';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminRequestDetail from './pages/AdminRequestDetail';
 
 function App() {
   const router = createBrowserRouter([
@@ -37,6 +41,22 @@ function App() {
     {
       path: '/profile',
       element: <Profile />
+    },
+    {
+      path: '/user-profile',
+      element: <UserProfile />
+    },
+    {
+      path: '/questionnaire',
+      element: <Questionnaire />
+    },
+    {
+      path: '/admin-dashboard',
+      element: <ProtectedRoute><AdminDashboard /></ProtectedRoute>
+    },
+    {
+      path: '/admin/user/:id',
+      element: <ProtectedRoute><AdminRequestDetail /></ProtectedRoute>
     },
     {
       path: "*",

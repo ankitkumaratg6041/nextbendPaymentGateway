@@ -5,6 +5,8 @@ import servicesRouter from './routes/servicesRoute.js';
 import signupRouter from './routes/authRoutes.js';
 import cookieParser from 'cookie-parser'; // to easily set and read cookies
 import orderRouter from './routes/orderRoutes.js';
+import requestRouter from './routes/clientRequestRoutes.js';
+import adminRouter from './routes/adminRoutes.js';
 
 // for loading environment variables
 dotenv.config();
@@ -26,6 +28,8 @@ app.use(express.json());
 app.use('/services', servicesRouter)
 app.use('/auth', signupRouter);
 app.use('/api', orderRouter);
+app.use('/api', requestRouter)
+app.use('/api/admin', adminRouter)
 
 
 app.get('/', (req, res) => {

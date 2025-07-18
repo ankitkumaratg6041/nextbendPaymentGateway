@@ -31,6 +31,7 @@ model User {
 
   // 🆕 Relationship
   orders        OrderRequest[]
+  clientRequests ClientRequest[]
 }
 
 model OrderRequest {
@@ -43,5 +44,17 @@ model OrderRequest {
   quotePdfUrl String? // uploaded by admin
   dealAccepted Boolean @default(false) // user can accept deal
   submittedAt DateTime @default(now())
+}
+
+model ClientRequest {
+  id           String   @id @default(cuid())
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  basicInfo    Json
+  selectedHelp Json
+  answers      Json
+  uploadedFiles String[] // URLs to S3 objects (added later)
+  quotePdfUrl  String?
+  submittedAt  DateTime @default(now())
 }
 
